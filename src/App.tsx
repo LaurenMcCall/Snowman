@@ -32,7 +32,7 @@ export function App() {
     'y',
     'z',
   ]
-
+  // using string, not array
   const [guessedLetters, setGuessedLetters] = useState('')
 
   // gets a random word from json file
