@@ -2,52 +2,104 @@ import React, { useState } from 'react'
 import { Snow } from './components/snow'
 import words from './words.json'
 import step0 from '/images/step_0.png'
+import step1 from '/images/step_1.png'
+import step2 from '/images/step_2.png'
+import step3 from '/images/step_3.png'
+import step4 from '/images/step_4.png'
+import step5 from '/images/step_5.png'
+import step6 from '/images/step_6.png'
+import step7 from '/images/step_7.png'
 
 export function App() {
   const alphabet = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
   ]
-  // using string, not array
-  const [guessedLetters, setGuessedLetters] = useState('')
 
   // gets a random word from json file
   const randomWord = words[Math.floor(Math.random() * words.length)]
-  console.log(randomWord)
 
-  // const [secretWord, setSecretWord] = useState(words[0])
-  // console.log(secretWord)
+  // set the secret word to be the random word pulled from the json file
+  const [secretWord, setSecretWord] = useState(randomWord.toUpperCase())
+  // QUESTION: How to make _______ have separation between characters on webpage?
+  const [currentWord, setCurrentWord] = useState('_______')
+  const [guessedLetters, setGuessedLetters] = useState([''])
+  const [numberOfCorrectLettersGuessed, setNumberOfCorrectLettersGuessed] =
+    useState(0)
+  console.log(secretWord)
 
-  function handleClickLetter(letter: string) {
-    const newValueForGuessedLetters = `${guessedLetters} ${letter}`
-    setGuessedLetters(newValueForGuessedLetters)
+  async function HandleNewGame() {
+    setSecretWord(randomWord.toUpperCase())
+    setCurrentWord('_______')
+    setGuessedLetters([''])
+    setNumberOfCorrectLettersGuessed(0)
   }
 
-  // const buttons = alphabet.map((letter) => letter)
+  function handleClickLetter(letter: string) {
+    // const newValueForGuessedLetters = `${guessedLetters} ${letter}`
+    setGuessedLetters([...guessedLetters, letter])
+
+    if (secretWord.includes(letter)) {
+      setNumberOfCorrectLettersGuessed(numberOfCorrectLettersGuessed + 1)
+      console.log(setNumberOfCorrectLettersGuessed)
+      let newCurrentWord = ''
+      // QUESTION:
+      for (let index = 0; index < secretWord.length; index++) {
+        if (secretWord[index] === letter) {
+          newCurrentWord = newCurrentWord.concat(letter)
+        } else {
+          newCurrentWord = newCurrentWord.concat(currentWord[index])
+        }
+      }
+      setCurrentWord(newCurrentWord)
+    }
+  }
+
+  function snowmanPictures() {
+    switch (numberOfCorrectLettersGuessed) {
+      case 0:
+        return step0
+      case 1:
+        return step1
+      case 2:
+        return step2
+      case 3:
+        return step3
+      case 4:
+        return step4
+      case 5:
+        return step5
+      case 6:
+        return step6
+      case 7:
+        return step7
+    }
+  }
+
   return (
     <div>
       <Snow />
@@ -57,38 +109,42 @@ export function App() {
       <main>
         <div>
           <img
-            src={step0}
+            className="border"
+            src={snowmanPictures()}
             alt="snow ground for the snowman"
             width="300"
             height="350"
           />
         </div>
         <ul>
-          <li>_</li>
-          <li>_</li>
-          <li>_</li>
-          <li>_</li>
-          <li>_</li>
-          <li>_</li>
-          <li>_</li>
+          <li>{currentWord}</li>
         </ul>
-        <div>Your guessed letters are: {guessedLetters}</div>
+        <div>
+          Your guessed letters are: <br />
+          {guessedLetters}
+        </div>
 
         <section>
           {alphabet.map(function (letter) {
             return (
               <button
+                className="border"
                 key={letter}
                 onClick={function () {
                   handleClickLetter(letter)
                 }}
                 disabled={guessedLetters.includes(letter)}
               >
-                {letter}
+                {letter.toUpperCase()}
               </button>
             )
           })}
         </section>
+        <div>
+          <button className="border" onClick={HandleNewGame}>
+            New Game
+          </button>
+        </div>
       </main>
     </div>
   )
