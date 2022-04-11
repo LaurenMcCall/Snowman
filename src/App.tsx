@@ -36,12 +36,8 @@ export function App() {
   const [guessedLetters, setGuessedLetters] = useState('')
 
   // gets a random word from json file
-  const randomWord = Math.floor(Math.random() * words.length)
+  const randomWord = words[Math.floor(Math.random() * words.length)]
   console.log(randomWord)
-
-  // split word into an array of letters
-  // const letters = randomWord.split('', words)
-  // console.log(letters)
 
   // const [secretWord, setSecretWord] = useState(words[0])
   // console.log(secretWord)
