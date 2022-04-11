@@ -10,6 +10,7 @@ html {
 //   margin: 0;
 //   min-height: 100%;
 // }
+
 body {
   height: 100vh;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -39,7 +40,7 @@ body {
     $random-yoyo-time: random_range(30000, 80000) / 100000;
     $random-yoyo-y: $random-yoyo-time * 100vh;
     $random-scale: random(10000) * 0.0001;
-    $fall-duration: random_range(10, 30) * 1s;
+    $fall-duration: random_range(20, 50) * 1s;
     $fall-delay: random(30) * -1s;
 
     &:nth-child(#{$i}) {
@@ -59,8 +60,48 @@ body {
     }
   }
 }
+
 h1 {
   display: flex;
   justify-content: center;
   color: white;
+}
+main div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section {
+  display: flex;
+  justify-content: center;
+  margin: 1;
+  padding: 0;
+}
+ul {
+  display: flex;
+  justify-content: center;
+  padding-left: 0px;
+}
+
+li {
+  list-style: none;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 60px;
+}
+main div {
+  color: white;
+  margin-bottom: 14px;
+  text-align: center;
+}
+button {
+  font-size: 1.5rem;
+  // margin-left: 2px;
+  padding: 0.3rem;
+}
+button:disabled {
+  // opacity: 0.7;
+  background-color: rgb(158, 187, 248);
+  cursor: not-allowed;
 }
