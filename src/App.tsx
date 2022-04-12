@@ -52,11 +52,14 @@ export function App() {
     useState(0)
   console.log(secretWord)
 
+  const displayWinnerMessage = document.querySelector('header h1')
+
   async function HandleNewGame() {
     setSecretWord(randomWord.toUpperCase())
     setCurrentWord('_______')
     setGuessedLetters([''])
     setNumberOfCorrectLettersGuessed(0)
+    displayWinnerMessage!.innerHTML = 'Do You Want To Build A Snowman?'
   }
 
   function handleClickLetter(letter: string) {
@@ -79,6 +82,8 @@ export function App() {
     }
   }
 
+  let result: string
+
   function snowmanPictures() {
     switch (numberOfCorrectLettersGuessed) {
       case 0:
@@ -96,6 +101,9 @@ export function App() {
       case 6:
         return step6
       case 7:
+        result = 'You won!'
+        displayWinnerMessage!.innerHTML = result
+        console.log(displayWinnerMessage)
         return step7
     }
   }
