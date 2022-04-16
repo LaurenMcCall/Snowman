@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Snow } from './components/snow'
 import words from './words.json'
+// Make a component
 import step0 from '/images/step_0.png'
 import step1 from '/images/step_1.png'
 import step2 from '/images/step_2.png'
@@ -45,14 +46,11 @@ export function App() {
 
   // set the secret word to be the random word pulled from the json file
   const [secretWord, setSecretWord] = useState(randomWord.toUpperCase())
-  // QUESTION: How to make _______ have separation between characters on webpage?
   const [currentWord, setCurrentWord] = useState('_______')
   const [guessedLetters, setGuessedLetters] = useState([''])
   const [numberOfCorrectLettersGuessed, setNumberOfCorrectLettersGuessed] =
     useState(0)
   console.log(secretWord)
-
-  const displayWinnerMessage = document.querySelector('header h1')
 
   async function HandleNewGame() {
     setSecretWord(randomWord.toUpperCase())
@@ -71,6 +69,15 @@ export function App() {
       console.log(setNumberOfCorrectLettersGuessed)
       let newCurrentWord = ''
       // QUESTION:
+
+      /* if true, then the for loop runs -- index equals 0, if index is less than
+      the length of the word, plus one to the index to successfully loop over the entire word. 
+
+      if current index of the word matches the letter, replace the newCurrentWord with that letter at that index. ELSE, continue looping through word and if letter does not match next index, replace newCurrentWord with '_' (which is the state of currentWord). do this until index >= length of word. 
+
+      set the new state of currentWord with the newCurrentWord.
+      */
+
       for (let index = 0; index < secretWord.length; index++) {
         if (secretWord[index] === letter) {
           newCurrentWord = newCurrentWord.concat(letter)
@@ -80,9 +87,11 @@ export function App() {
       }
       setCurrentWord(newCurrentWord)
     }
+    console.log(currentWord)
   }
 
-  let result: string
+  let result = ''
+  const displayWinnerMessage = document.querySelector('header h1')
 
   function snowmanPictures() {
     switch (numberOfCorrectLettersGuessed) {
@@ -101,7 +110,7 @@ export function App() {
       case 6:
         return step6
       case 7:
-        result = 'You won!'
+        result = 'You did it! Click New Game to build another one!'
         displayWinnerMessage!.innerHTML = result
         console.log(displayWinnerMessage)
         return step7
@@ -112,14 +121,16 @@ export function App() {
     <div>
       <Snow />
       <header>
-        <h1>Do You Want To Build A Snowman?</h1>
+        <h1 className={snowmanPictures() === step7 ? 'blink-me' : ''}>
+          Do You Want To Build A Snowman?
+        </h1>
       </header>
       <main>
         <div>
           <img
             className="border"
             src={snowmanPictures()}
-            alt="snow ground for the snowman"
+            alt="snowman"
             width="300"
             height="350"
           />
@@ -149,11 +160,12 @@ export function App() {
           })}
         </section>
         <div>
-          <button className="border" onClick={HandleNewGame}>
+          <button className="border " onClick={HandleNewGame}>
             New Game
           </button>
         </div>
       </main>
+      <footer>☃️ Built by Lauren McCall ☃️ </footer>
     </div>
   )
 }
